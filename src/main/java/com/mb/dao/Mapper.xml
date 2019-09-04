@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 映射文件的根标签 -->  
+  <!-- 是接口的全路径名称 -->
+<mapper namespace="com.mb.dao.MyDao">
+	
+	<select id="list" resultType="map">
+		SELECT d.id,d.name,d.js,d.daoyan,d.shijian,f.fname FROM dianying d LEFT JOIN fenlei f ON f.fid=d.fid 
+	</select>
+	
+	<select id="toadd" resultType="com.mb.bean.FenLei">
+		select * from fenlei 		
+	</select>
+	
+	<insert id="add">
+		INSERT INTO dianying VALUES (NULL,#{name},#{js},#{daoyan},#{shijian},#{fenlei.fid})
+	</insert>
+	
+	<select id="toupd" resultType="com.mb.bean.DianYing">
+		SELECT * FROM dianying  WHERE dianying.id=#{id}
+	</select>
+	
+	<update id="upd">
+		UPDATE dianying SET name=#{name},js=#{js},daoyan=#{daoyan},shijian=#{shijian}  where dianying.id=#{id}
+	</update>
+	
+	
+</mapper>

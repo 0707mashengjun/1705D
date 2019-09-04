@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		
+	<!-- 扫描  控制层的包-->
+	<context:component-scan base-package="com.mb.controller"></context:component-scan>
+	
+	<!-- json 自动解析json -->
+	<mvc:annotation-driven/>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!-- 处理静态资源，因为SpringMVC会把每次的请求都当作访问Controller -->
+	<mvc:default-servlet-handler/> 
+	
+	<!-- fastjson解析器 -->
+	<mvc:annotation-driven>
+            <mvc:message-converters register-defaults="true">
+                <!-- 配置Fastjson支持 -->
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json</value>
+                        </list>
+                    </property>
+                    <property name="features">
+                        <list>
+                            <value>WriteMapNullValue</value>
+                            <value>QuoteFieldNames</value>
+                        </list>
+                    </property>
+                </bean>
+            </mvc:message-converters>
+  </mvc:annotation-driven>
+	
+	
+	
+	
+	
+	<!-- json传值 -->
+	<!-- <mvc:message-converters register-defaults="true">
+                配置Fastjson支持
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json</value>
+                        </list>
+                    </property>
+                    <property name="features">
+                        <list>
+                            <value>WriteMapNullValue</value>
+                            <value>QuoteFieldNames</value>
+                        </list>
+                    </property>
+                </bean>
+            </mvc:message-converters> -->
+	
+	
+		<!--  上传 -->
+ 	<!-- <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+ 		
+ 		<!--  <property name="maxUploadSize" value="104857600"/>  
+	 <property name="maxInMemorySize" value="2048"/>   读取文件到内存中最大的字节数  
+		  <property name="defaultEncoding" value="UTF-8"/>   默认编码
+ 	</bean>   -->
+	
+		<!-- JSR-303 验证 需要配置 此项 -->
+	  <!--  <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	         <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+	         <property name="validationMessageSource" ref="validatemessageSource" />
+    	</bean> -->
+    	
+<!-- 	    <bean id="conversion-service"  class="org.springframework.format.support.FormattingConversionServiceFactoryBean" /> -->
+	    <!-- 配置国际化资源文件 -->
+	  <!--   <bean id="validatemessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	         <property name="basename" value="classpath:i18n" />
+	         <property name="fileEncodings" value="utf-8" />
+	         <property name="cacheSeconds" value="120" />
+	    </bean> -->
+		<!-- <mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/**"/>
+				<mvc:exclude-mapping path="/to_regx.do"/>
+				<mvc:exclude-mapping path="/regx.do"/>
+				<mvc:exclude-mapping path="/login.do"/>
+				<bean class="com.mb.util.MyInterceptor"/>
+			</mvc:interceptor>
+		</mvc:interceptors> -->
+</beans>
+
